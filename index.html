@@ -636,27 +636,12 @@
         <span>Proposta de Parceria</span>
     </a>
 
-    <!-- Floating PWA Install Prompt Banner -->
-    <div id="pwa-install-banner" class="pwa-install-banner">
-        <div class="pwa-install-info">
-            <img src="assets/logo.svg" alt="Logo" class="pwa-install-icon">
-            <div>
-                <strong>Instalar App da Pastelaria</strong>
-                <p>Peça em 1 toque na tela inicial</p>
-            </div>
-        </div>
-        <div class="pwa-install-actions">
-            <button id="btn-pwa-action" class="btn-pwa-action" onclick="window.triggerPWAInstall()">Instalar</button>
-            <button class="btn-pwa-close" onclick="window.dismissPWA()" aria-label="Fechar banner de instalação">&times;</button>
-        </div>
-    </div>
-
     <!-- Floating WhatsApp Customer Service Button -->
     <a href="https://wa.me/555494297117?text=Ol%C3%A1!%20Gostaria%20de%20atendimento%20na%20Panazzolo%20Pastelaria." target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Falar com atendimento no WhatsApp">
         <i data-lucide="message-circle" aria-hidden="true"></i>
     </a>
 
-    <script src="app.js?v=20260814-v8"></script>
+    <script src="app.js?v=20260814-v9"></script>
     <script>
         // PWA Splash Screen Handler
         window.addEventListener('DOMContentLoaded', () => {
@@ -678,27 +663,14 @@
             });
         }
 
-        // PWA Install Prompt Handler
+        // PWA Install Prompt Handler (Acionado voluntariamente no botão do topo)
         let deferredPrompt = null;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
         });
 
-        // Show install banner after splash
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const banner = document.getElementById('pwa-install-banner');
-                if (banner && !sessionStorage.getItem('pwa_dismissed')) {
-                    banner.classList.add('show');
-                }
-            }, 2600);
-        });
-
         window.triggerPWAInstall = async () => {
-            const banner = document.getElementById('pwa-install-banner');
-            if (banner) banner.classList.remove('show');
-            
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
@@ -707,17 +679,15 @@
             } else {
                 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
                 if (isIOS) {
-                    alert("📲 Para instalar no iPhone:\n\n1. Toque no botão de Compartilhar (ícone com quadrado e seta ⎋)\n2. Role para baixo e selecione 'Adicionar à Tela de Início'");
+                    if (window.showToast) {
+                        window.showToast("📲 No iPhone: toque em Compartilhar ⎋ e 'Adicionar à Tela de Início'");
+                    }
                 } else {
-                    alert("📲 Para instalar no seu celular Android:\n\n1. Toque nos 3 pontinhos (⋮) no topo do navegador Chrome\n2. Selecione 'Instalar aplicativo' ou 'Adicionar à tela inicial'");
+                    if (window.showToast) {
+                        window.showToast("📲 No Android: toque nos 3 pontinhos (⋮) e 'Instalar aplicativo'");
+                    }
                 }
             }
-        };
-
-        window.dismissPWA = () => {
-            const banner = document.getElementById('pwa-install-banner');
-            if (banner) banner.classList.remove('show');
-            sessionStorage.setItem('pwa_dismissed', 'true');
         };
 
         lucide.createIcons();
