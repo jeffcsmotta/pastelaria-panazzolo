@@ -493,14 +493,61 @@ function changeQuantity(index, delta) {
 }
 window.changeQuantity = changeQuantity;
 
-// Clear all items from cart
-function clearCart() {
+// Clear all items from cart with custom confirmation modal (replacing browser confirm)
+window.clearCart = function() {
     if (cart.length === 0) return;
+
+    const itens = cart.reduce((soma, item) => soma + item.quantity, 0);
+    const valor = cart.reduce((soma, item) => soma + (item.price * item.quantity), 0);
+
+    const overlay = document.getElementById('confirm-clear');
+    const texto = document.getElementById('confirm-clear-text');
+
+    if (!overlay || !texto) {
+        aplicarLimpeza();
+        return;
+    }
+
+    const itemLabel = itens === 1 ? 'item' : 'itens';
+    texto.innerHTML = `Você vai remover <strong>${itens} ${itemLabel}</strong>, no valor de <strong>R$ ${valor.toFixed(2).replace('.', ',')}</strong>.`;
+
+    abrirConfirmacao(overlay);
+};
+
+function aplicarLimpeza() {
     cart = [];
     updateCartUI();
-    showToast('🗑️ Carrinho esvaziado com sucesso!');
+    closeCart();
+    showToast('🗑️ Pedido limpo com sucesso.');
 }
-window.clearCart = clearCart;
+
+function abrirConfirmacao(overlay) {
+    const sim = document.getElementById('confirm-clear-yes');
+    const nao = document.getElementById('confirm-clear-no');
+
+    function fechar() {
+        overlay.hidden = true;
+        document.removeEventListener('keydown', aoTeclar);
+        overlay.removeEventListener('click', aoClicarFora);
+        if (sim) sim.onclick = null;
+        if (nao) nao.onclick = null;
+    }
+    function aoTeclar(e) {
+        if (e.key === 'Escape') fechar();
+    }
+    function aoClicarFora(e) {
+        if (e.target === overlay) fechar();
+    }
+
+    if (sim) sim.onclick = () => { fechar(); aplicarLimpeza(); };
+    if (nao) nao.onclick = fechar;
+    document.addEventListener('keydown', aoTeclar);
+    overlay.addEventListener('click', aoClicarFora);
+
+    overlay.hidden = false;
+    if (window.lucide) lucide.createIcons();
+    if (nao) nao.focus();
+}
 
 function setupCartDrawerListeners() {
     const fulfillmentBtns = document.querySelectorAll('.del-btn');
@@ -580,10 +627,10 @@ function updateCartUI() {
         pixQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${qrData}`;
     }
 
-    // Toggle clear cart button visibility
-    const clearCartBtn = document.getElementById('btn-clear-cart');
-    if (clearCartBtn) {
-        clearCartBtn.style.display = cart.length > 0 ? 'inline-flex' : 'none';
+    // Toggle header clear cart button (Visible only when cart has items)
+    const headerClearBtn = document.getElementById('cart-clear-header');
+    if (headerClearBtn) {
+        headerClearBtn.style.display = cart.length > 0 ? 'inline-flex' : 'none';
     }
 
     const container = document.getElementById('cart-items-container');

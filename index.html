@@ -204,6 +204,10 @@
                     <span class="status-dot"></span>
                     <span class="status-text">Aberto Agora • Pedidos no WhatsApp</span>
                 </div>
+                <!-- Botao Limpar do Cabecalho (Visivel quando ha itens no pedido) -->
+                <button type="button" class="cart-clear-btn" id="cart-clear-header" onclick="window.clearCart()" aria-label="Limpar o pedido" title="Limpar pedido">
+                    <i data-lucide="trash-2"></i>
+                </button>
                 <button class="cart-toggle-btn" id="cart-toggle" onclick="window.openCart()" aria-label="Abrir carrinho de compras">
                     <i data-lucide="shopping-bag"></i>
                     <span class="cart-count" id="cart-count">0</span>
@@ -513,14 +517,10 @@
         
         <!-- Single Unified Scrollable Body -->
         <div class="cart-body">
-            <!-- Cart Items Section with Clean "Limpar Carrinho" Button -->
+            <!-- Cart Items Section -->
             <div class="cart-section">
                 <div class="cart-section-header">
                     <span class="cart-section-title">ITENS DO PEDIDO</span>
-                    <button type="button" class="btn-clear-cart" id="btn-clear-cart" onclick="window.clearCart()" aria-label="Esvaziar Carrinho">
-                        <i data-lucide="trash-2" style="width:13px; height:13px;"></i>
-                        <span>Limpar</span>
-                    </button>
                 </div>
                 <div id="cart-items-container" class="cart-items-container">
                     <!-- JS populated -->
@@ -616,6 +616,24 @@
             </div>
         </div>
     </aside>
+
+    <!-- Modal de Confirmacao de Limpar Pedido (Substitui confirm do navegador) -->
+    <div class="confirm-overlay" id="confirm-clear" role="dialog" aria-modal="true" aria-labelledby="confirm-clear-title" hidden>
+        <div class="confirm-box">
+            <div class="confirm-icon"><i data-lucide="trash-2"></i></div>
+            <h3 class="confirm-title" id="confirm-clear-title">Limpar o pedido?</h3>
+            <p class="confirm-text" id="confirm-clear-text"></p>
+            <p class="confirm-warning">Esta ação não pode ser desfeita.</p>
+            <div class="confirm-actions">
+                <button type="button" class="confirm-btn confirm-cancel" id="confirm-clear-no">
+                    Manter o pedido
+                </button>
+                <button type="button" class="confirm-btn confirm-ok" id="confirm-clear-yes">
+                    Sim, limpar tudo
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Toast Notification Box -->
     <div id="toast-notification" class="toast-box"></div>
