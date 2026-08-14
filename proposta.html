@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial | Panazzolo Pastelaria & Onira Labs</title>
+    <meta name="description" content="Proposta comercial transparente para a Panazzolo Pastelaria: compre este site por R$ 1.000 em dinheiro + R$ 500 em permuta de consumação.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-page: #FAFAFC;
+            --bg-card: #FFFFFF;
+            --text-dark: #0F172A;
+            --text-main: #334155;
+            --text-muted: #64748B;
+            
+            --primary: #F59E0B;
+            --primary-hover: #D97706;
+            --primary-light: #FFFBEB;
+            --green: #16A34A;
+            --green-light: #F0FDF4;
+            
+            --border: #E2E8F0;
+            --font-heading: 'Outfit', -apple-system, sans-serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .proposal-nav {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-family: var(--font-heading);
+            font-weight: 800;
+        }
+
+        .brand-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--primary);
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: #F1F5F9;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-dark);
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .offer-hero { padding: 28px 0 20px 0; }
+
+        .offer-card-main {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            color: #FFFFFF;
+            border-radius: 20px;
+            padding: 36px 28px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15);
+            text-align: center;
+        }
+
+        .offer-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(245, 158, 11, 0.25);
+            border: 1px solid var(--primary);
+            border-radius: 9999px;
+            color: #FEF3C7;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .offer-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 900;
+            line-height: 1.2;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+
+        .offer-title span { color: var(--primary); }
+        .offer-desc { font-size: 1.05rem; color: #94A3B8; max-width: 580px; margin: 0 auto; }
+
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i { color: var(--primary); }
+
+        .domain-strip {
+            background: var(--green-light);
+            border: 1.5px solid rgba(22, 163, 74, 0.3);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .domain-name { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; color: #0F172A; }
+        .domain-price strong { font-size: 1.15rem; color: var(--green); display: block; }
+        .domain-price span { font-size: 0.78rem; color: var(--text-muted); }
+
+        .numbers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+        .num-card { background: #F8FAFC; border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+        .num-big { font-family: var(--font-heading); font-size: 2rem; font-weight: 900; color: var(--primary); line-height: 1; margin-bottom: 4px; }
+        .num-title { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+        .num-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+        .financial-split { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; }
+        .fin-box-main { background: #FFFBEB; border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; }
+        .fin-label { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .fin-total { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; color: var(--text-dark); margin: 2px 0 12px 0; }
+        .fin-item { font-size: 0.9rem; color: var(--text-dark); padding-top: 8px; border-top: 1px solid rgba(245, 158, 11, 0.2); margin-top: 8px; }
+
+        .fin-box-sub { background: #F8FAFC; border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: center; }
+        .fin-sub-val { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin: 2px 0; }
+
+        .dev-bar { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+        .dev-info { display: flex; align-items: center; gap: 12px; }
+        .dev-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--primary-light); color: var(--primary); font-weight: 800; display: flex; align-items: center; justify-content: center; }
+        .dev-text h4 { font-size: 0.98rem; font-weight: 700; color: var(--text-dark); }
+        .dev-text p { font-size: 0.82rem; color: var(--text-muted); }
+
+        .dev-links { display: flex; gap: 8px; }
+        .btn-dev-link { padding: 6px 12px; border-radius: 6px; background: #F1F5F9; border: 1px solid var(--border); color: var(--text-dark); font-size: 0.8rem; font-weight: 600; text-decoration: none; }
+        .btn-dev-link:hover { border-color: var(--primary); color: var(--primary); }
+
+        .cta-box { background: #18181B; color: #FFFFFF; border-radius: 16px; padding: 28px 20px; text-align: center; margin-bottom: 36px; }
+        .cta-box h3 { font-size: 1.4rem; color: #FFFFFF; margin-bottom: 6px; }
+        .cta-box p { font-size: 0.92rem; color: #A1A1AA; margin-bottom: 20px; }
+
+        .btn-wa-action { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 28px; background: #25D366; color: #FFFFFF; border-radius: 12px; font-weight: 800; font-size: 1.05rem; text-decoration: none; transition: background 0.2s; width: 100%; }
+        .btn-wa-action:hover { background: #1EBE57; }
+
+        @media (max-width: 640px) {
+            .offer-title { font-size: 1.7rem; }
+            .domain-strip { flex-direction: column; align-items: flex-start; }
+            .numbers-grid, .financial-split { grid-template-columns: 1fr; }
+            .dev-bar { flex-direction: column; align-items: flex-start; }
+            .dev-links { width: 100%; }
+            .btn-dev-link { flex: 1; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <nav class="proposal-nav">
+        <div class="container nav-wrapper">
+            <a href="index.html" class="brand-logo-link">
+                <img src="assets/logo.svg" alt="Panazzolo Pastel Y Pizza Logo" style="height: 48px; width: auto;">
+            </a>
+            <a href="index.html" class="back-link">
+                <i data-lucide="arrow-left"></i> Ver Site Exemplo
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <!-- Main Hook Banner -->
+        <section class="offer-hero">
+            <div class="offer-card-main">
+                <span class="offer-badge">Proposta de Parceria Comercial</span>
+                <h1 class="offer-title">Compre este site por <span>R$ 1.000,00</span> + permuta</h1>
+                <p class="offer-desc">Presença digital própria com cardápio completo de pastéis e cestinhos mistos integrado ao WhatsApp oficial da Panazzolo Pastelaria.</p>
+            </div>
+        </section>
+
+        <!-- Domínio Oficial -->
+        <div class="domain-strip">
+            <div>
+                <div class="domain-name">panazzolopastelaria.com.br</div>
+                <div style="font-size:0.85rem; color:var(--text-muted);">Domínio disponível hoje para registro no Registro.br</div>
+            </div>
+            <div class="domain-price">
+                <strong>R$ 40,00 / ano</strong>
+                <span>Compra & DNS inclusos</span>
+            </div>
+        </div>
+
+        <!-- Benefícios Numéricos (Papo Reto) -->
+        <section class="section-card">
+            <h2 class="section-title"><i data-lucide="trending-up"></i> Benefícios da Operação Própria</h2>
+            
+            <div class="numbers-grid">
+                <div class="num-card">
+                    <div class="num-big">R$ 0,00</div>
+                    <div class="num-title">Taxas por Pedido</div>
+                    <div class="num-text">O iFood retém de 12% a 27% por venda. No seu site próprio, 100% da margem fica com a Pastelaria.</div>
+                </div>
+
+                <div class="num-card">
+                    <div class="num-big">+70%</div>
+                    <div class="num-title">Busca no Google</div>
+                    <div class="num-text">Posicionamento orgânico no Google Search e Maps para quem busca pastelaria e porções no Panazzolo.</div>
+                </div>
+
+                <div class="num-card">
+                    <div class="num-big">2 Clics</div>
+                    <div class="num-title">Montagem do Pedido</div>
+                    <div class="num-text">Cliente escolhe sabores, tamanhos (M/G), acompanhamentos e envia direto no WhatsApp (54) 99429-7117.</div>
+                </div>
+
+                <div class="num-card">
+                    <div class="num-big">100%</div>
+                    <div class="num-title">Pronto para Uso</div>
+                    <div class="num-text">Estrutura de código, cardápio transcrito e layout montados e prontos para publicar imediatamente.</div>
+                </div>
+            </div>
+
+            <!-- Diferencial Tecnológico Google 1-Tap & PWA -->
+            <div style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(16,185,129,0.04)); border: 1px solid rgba(245,158,11,0.25); border-radius: 12px;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="zap" style="color: #D97706; width: 20px; height: 20px;"></i> Tecnologia de Ponta Integrada ao Google:
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; font-size: 0.85rem; color: var(--text-muted);">
+                    <div style="background: #FFFFFF; padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
+                        <strong style="color: var(--text-dark); display: block; margin-bottom: 4px;">🔑 Google 1-Tap & Autofill</strong>
+                        Identifica a conta Google do cliente e preenche nome e endereço salvo em 1 toque, sem precisar digitar tudo.
+                    </div>
+                    <div style="background: #FFFFFF; padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
+                        <strong style="color: var(--text-dark); display: block; margin-bottom: 4px;">💳 Biometria & Google Pay</strong>
+                        Permite pagamentos rápidos com Face ID e impressão digital sem precisar pegar a carteira.
+                    </div>
+                    <div style="background: #FFFFFF; padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
+                        <strong style="color: var(--text-dark); display: block; margin-bottom: 4px;">📲 PWA (Ícone na Tela do Celular)</strong>
+                        O cliente pode salvar o ícone da Panazzolo na tela de início do celular como se fosse um app da loja, sem downloads pesados.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Valores & Oferta Principal + Upsell -->
+        <section class="section-card">
+            <h2 class="section-title"><i data-lucide="calculator"></i> Estrutura da Proposta & Upsell Opcional</h2>
+            
+            <div class="financial-split" style="margin-bottom: 20px;">
+                <!-- Oferta Principal (Site) -->
+                <div class="fin-box-main" style="background: #F8FAFC; border: 1.5px solid var(--border);">
+                    <span class="fin-label" style="color: var(--text-dark); font-weight: 900;">⭐ Oferta Principal • Site Onira Flow</span>
+                    <div class="fin-total" style="font-size: 1.7rem; color: var(--text-dark); margin: 6px 0 12px;">R$ 1.000 + R$ 500 permuta</div>
+                    <div class="fin-item">
+                        💵 <strong>Desenvolvimento do Site:</strong> R$ 1.000,00 em Dinheiro/Pix (ou parcelado no cartão).
+                    </div>
+                    <div class="fin-item">
+                        🥟 <strong>Permuta:</strong> R$ 500,00 em consumo de pastéis e porções para a equipe.
+                    </div>
+                    <div class="fin-item">
+                        ⚡ <strong>Mensalidade Base:</strong> R$ 100,00/mês de hospedagem em nuvem de alta velocidade e suporte contínuo.
+                    </div>
+                </div>
+
+                <!-- Módulo Upsell (Google Ads) -->
+                <div class="fin-box-main" style="background: rgba(245, 158, 11, 0.08); border: 2px solid var(--primary); position: relative;">
+                    <span class="offer-badge" style="position: absolute; top: -12px; right: 16px; background: var(--primary); color: #000000; font-weight: 900;">🚀 UPSELL OPCIONAL</span>
+                    <span class="fin-label" style="color: #D97706;">Módulo Adicional • Acelerador Google Ads</span>
+                    <div class="fin-total" style="font-size: 1.7rem; color: #B45309; margin: 6px 0 12px;">+ R$ 100/mês <span style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">(Promo 3 primeiras parcelas)</span></div>
+                    <div class="fin-item">
+                        🎯 <strong>Tráfego Pago Local:</strong> Criação e gestão de anúncios no Google Search e Maps para quem busca <em>"pastel delivery Caxias"</em> e <em>"pastelaria Panazzolo"</em>.
+                    </div>
+                    <div class="fin-item">
+                        🎁 <strong>Condição Promocional:</strong> Apenas <strong>+ R$ 100,00 a mais</strong> nas primeiras 3 parcelas/meses de tração (totalizando R$ 200/mês durante a fase inicial).
+                    </div>
+                    <div class="fin-item">
+                        📈 <strong>Continuidade Pré-Fixada:</strong> A partir do 4º mês, valor pré-fixado de <strong>+ R$ 300,00/mês</strong> em contrato de 12 meses para escala contínua de pedidos.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formas de Pagamento Explicadas -->
+            <div style="background: #F8FAFC; border: 1px solid var(--border); border-radius: 12px; padding: 18px;">
+                <h4 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px;">
+                    💳 Como Funciona Nosso Faturamento Direto:
+                </h4>
+                <ul style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; padding-left: 18px;">
+                    <li><strong>Pix Direto Onira Labs:</strong> Pagamento instantâneo sem taxas adicionais.</li>
+                    <li><strong>Cartão de Crédito:</strong> Parcelamento em até 10x ou assinatura mensal automática.</li>
+                    <li><strong>Boleto Bancário PJ:</strong> Faturamento direto para a sua empresa sem burocracia.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Desenvolvedor -->
+        <div class="dev-bar">
+            <div class="dev-info">
+                <div class="dev-avatar">JM</div>
+                <div class="dev-text">
+                    <h4>Jeff Motta • Onira Labs</h4>
+                    <p>Desenvolvimento de Software & Presença Digital</p>
+                </div>
+            </div>
+            <div class="dev-links">
+                <a href="https://jeffmotta.framer.website/" target="_blank" class="btn-dev-link">Portfólio</a>
+                <a href="https://www.linkedin.com/in/jeff-motta/" target="_blank" class="btn-dev-link">LinkedIn</a>
+            </div>
+        </div>
+
+        <!-- CTA Aceite -->
+        <section class="cta-box">
+            <h3>Vamos colocar o canal próprio da Panazzolo no ar?</h3>
+            <p>Clique abaixo para falar direto com o Jeff no WhatsApp, escolher seu plano e iniciar a ativação imediata.</p>
+            <a href="https://wa.me/5554996862169?text=Ol%C3%A1%20Jeff!%20Li%20a%20proposta%20da%20Panazzolo%20Pastelaria%20e%20quero%20ativar%20o%20site%20(com%20o%20Acelerador%20Google%20Ads)!" target="_blank" class="btn-wa-action">
+                <i data-lucide="send"></i>
+                <span>Aceitar Proposta no WhatsApp (54) 99686-2169</span>
+            </a>
+        </section>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
