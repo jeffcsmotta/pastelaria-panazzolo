@@ -1,16 +1,41 @@
 /* ==========================================================================
    PANAZZOLO PASTELARIA - LOGIC & APPLICATION ENGINE
+   Rua Luiz Antunes, 683 (Sala 1) • Panazzolo, Caxias do Sul - RS
    ========================================================================== */
 
-// Local Custom High-Res Brazilian Pastéis Images
+// Client Business Configuration
+const CLIENT_CONFIG = {
+    name: 'Panazzolo Pastelaria',
+    phoneFormatted: '(54) 99429-7117',
+    whatsappNumber: '5554994297117',
+    pixKey: '54994297117',
+    address: 'Rua Luiz Antunes, 683 - Sala 1, Panazzolo, Caxias do Sul - RS',
+    deliveryFee: 5.00,
+    hours: {
+        // 0: Domingo, 1: Segunda, 2: Terça, 3: Quarta, 4: Quinta, 5: Sexta, 6: Sábado
+        0: { open: 12, close: 22, name: 'Domingo' },
+        1: null, // Segunda Fechado
+        2: { open: 16, close: 22, name: 'Terça-feira' },
+        3: { open: 16, close: 22, name: 'Quarta-feira' },
+        4: { open: 16, close: 22, name: 'Quinta-feira' },
+        5: { open: 16, close: 22, name: 'Sexta-feira' },
+        6: { open: 11, close: 22, name: 'Sábado' }
+    }
+};
+
+// Local Custom High-Res Assets
 const PASTEL_IMGS = {
     carne: 'assets/pastel_carne.png',
     queijo: 'assets/pastel_queijo.png',
     doce: 'assets/pastel_doce.png',
-    fritas: 'assets/fritas.jpg'
+    fritas: 'assets/fritas.jpg',
+    cesto: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80',
+    cebola: 'https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=800&q=80',
+    omelete: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80',
+    bebida: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80'
 };
 
-// Menu Database Transcribed Exactly from Photo
+// Menu Database Transcribed
 const MENU_DATA = [
     // PASTÉIS SALGADOS
     {
@@ -21,16 +46,19 @@ const MENU_DATA = [
         badge: 'Mais Pedido',
         image: PASTEL_IMGS.carne,
         rating: '5.0',
-        prices: { P: 12.25, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'ps2',
         title: 'Pastel de Carne e Queijo',
         category: 'salgados',
         description: 'Carne moída bem suculenta com generosa camada de muçarela derretida estalando de quente.',
+        badge: 'Favorito',
         image: PASTEL_IMGS.carne,
         rating: '4.9',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'ps3',
@@ -39,7 +67,8 @@ const MENU_DATA = [
         description: 'Carne moída temperada no ponto com rodelas de azeitonas faturadas e tempero especial.',
         image: PASTEL_IMGS.carne,
         rating: '4.8',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'ps4',
@@ -48,26 +77,29 @@ const MENU_DATA = [
         description: 'Clássico presunto de primeira qualidade com muçarela derretida estalando de quente.',
         image: PASTEL_IMGS.queijo,
         rating: '4.9',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'ps5',
         title: 'Pastel de Queijo com Orégano',
         category: 'salgados',
         description: 'Abundância de muçarela puxando e cheirosa com toque especial de orégano.',
-        badge: 'Favorito',
+        badge: 'Clássico',
         image: PASTEL_IMGS.queijo,
         rating: '4.9',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'ps6',
         title: 'Pastel de Pizza',
         category: 'salgados',
-        description: 'Recheio tradicional de pizza (muçarela, presunto, tomate e orégano) dentro do pastel frito.',
+        description: 'Recheio tradicional de pizza (muçarela, presunto, tomate fresco e orégano) dentro do pastel frito.',
         image: PASTEL_IMGS.queijo,
         rating: '4.8',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'ps7',
@@ -77,7 +109,8 @@ const MENU_DATA = [
         badge: 'Top Vendas',
         image: PASTEL_IMGS.queijo,
         rating: '5.0',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'ps8',
@@ -86,7 +119,8 @@ const MENU_DATA = [
         description: 'Palmito macio fatiado com queijo muçarela derretido envolvido em massa sequinha.',
         image: PASTEL_IMGS.queijo,
         rating: '4.8',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'ps9',
@@ -95,16 +129,18 @@ const MENU_DATA = [
         description: 'Calabresa moída crocante na chapa com requeijão Catupiry dentro da massa frita de pastel.',
         image: PASTEL_IMGS.carne,
         rating: '4.9',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'ps10',
         title: 'Pastel de Milho e Bacon',
         category: 'salgados',
-        description: 'Milho verde doce com bacon crocante em cubos e muçarela.',
+        description: 'Milho verde doce com bacon crocante em cubos e muçarela derretida.',
         image: PASTEL_IMGS.queijo,
         rating: '4.9',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'ps11',
@@ -113,7 +149,8 @@ const MENU_DATA = [
         description: 'Frango desfiado com creme cremoso de queijo cheddar em pastel bem quentinho.',
         image: PASTEL_IMGS.queijo,
         rating: '4.8',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
 
     // PASTÉIS DOCES
@@ -121,11 +158,12 @@ const MENU_DATA = [
         id: 'pd1',
         title: 'Pastel de Chocolate com Nozes',
         category: 'doces',
-        description: 'Recheio farto de chocolate derretido (branco ou preto) com pedaços crocantes de nozes.',
+        description: 'Recheio farto de chocolate derretido nobre com pedaços crocantes de nozes selecionadas.',
         badge: 'Doce Especial',
         image: PASTEL_IMGS.doce,
         rating: '5.0',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'pd2',
@@ -134,46 +172,52 @@ const MENU_DATA = [
         description: 'Chocolate nobre derretido salpicado com coco ralado estilo Prestígio.',
         image: PASTEL_IMGS.doce,
         rating: '4.9',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
     {
         id: 'pd3',
         title: 'Pastel Romeu e Julieta',
         category: 'doces',
-        description: 'Combinação perfeita de goiabada cremosa quente com muçarela derretida.',
+        description: 'Combinação clássica de goiabada cremosa quente com muçarela derretida puxando.',
         image: PASTEL_IMGS.doce,
         rating: '4.8',
-        prices: { P: 12.90, M: 12.90, G: 17.90 }
+        hasSizes: true,
+        prices: { P: 12.90, G: 17.90 }
     },
 
-    // CESTINHOS
+    // CESTINHOS MISTOS
     {
         id: 'c1',
-        title: 'Cesto Misto 1',
+        title: 'Cesto Misto 1 Farto',
         category: 'cestinhos',
-        description: 'Batata Frita, Polenta Frita, Coxinha de Frango, Cebola Frita e Queijo Empanado.',
-        badge: 'Para Compartilhar',
-        image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80',
+        description: 'Batata Frita bem crocante, Polenta Frita douradinha, Coxinha de Frango recheada, Cebola Frita e Queijo Empanado puxando!',
+        badge: 'Destaque da Casa',
+        image: PASTEL_IMGS.cesto,
         rating: '5.0',
-        prices: { P: 74.90, M: 74.90, G: 99.90 }
+        hasSizes: true,
+        prices: { P: 74.90, G: 99.90 }
     },
     {
         id: 'c2',
-        title: 'Cesto Misto 2',
+        title: 'Cesto Misto 2 Especial',
         category: 'cestinhos',
-        description: 'Polenta Frita, Batata Frita, Dadinho de Tapioca, Croquete de Carne e Bolinha de Queijo.',
-        image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80',
+        description: 'Polenta Frita crocante, Batata Frita, Dadinho de Tapioca crocante por fora e macio por dentro, Croquete de Carne e Bolinha de Queijo.',
+        badge: 'Para Compartilhar',
+        image: PASTEL_IMGS.cesto,
         rating: '4.9',
-        prices: { P: 74.90, M: 74.90, G: 99.90 }
+        hasSizes: true,
+        prices: { P: 74.90, G: 99.90 }
     },
     {
         id: 'c3',
-        title: 'Cesto Misto 3',
+        title: 'Cesto Misto 3 Completo',
         category: 'cestinhos',
-        description: 'Polenta Frita, Batata Frita, Cebola Empanada, Risoles de Presunto e Queijo e Queijo Empanado.',
-        image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=800&q=80',
+        description: 'Polenta Frita, Batata Frita, Anéis de Cebola Empanada, Risoles de Presunto e Queijo e Queijo Empanado.',
+        image: PASTEL_IMGS.cebola,
         rating: '4.9',
-        prices: { P: 74.90, M: 74.90, G: 99.90 }
+        hasSizes: true,
+        prices: { P: 74.90, G: 99.90 }
     },
 
     // PORÇÕES
@@ -181,19 +225,21 @@ const MENU_DATA = [
         id: 'po1',
         title: 'Batata Frita Crocante',
         category: 'porcoes',
-        description: 'Batatas palito douradas e bem crocantes. Escolha Média (400g) ou Grande (600g).',
+        description: 'Batatas palito douradas e bem crocantes sequinhas. Escolha Média (400g) ou Grande (600g).',
         image: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=800&q=80',
         rating: '4.9',
-        prices: { P: 25.90, M: 25.90, G: 32.90 }
+        hasSizes: true,
+        prices: { P: 25.90, G: 32.90 }
     },
     {
         id: 'po2',
-        title: 'Cebola Empanada Crocante',
+        title: 'Anéis de Cebola Empanada',
         category: 'porcoes',
-        description: 'Anéis de cebola empanados e douradinhos. Escolha Média ou Grande.',
-        image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=800&q=80',
+        description: 'Anéis de cebola empanados crocantes e douradinhos. Escolha Média ou Grande.',
+        image: PASTEL_IMGS.cebola,
         rating: '4.8',
-        prices: { P: 27.90, M: 27.90, G: 34.90 }
+        hasSizes: true,
+        prices: { P: 27.90, G: 34.90 }
     },
 
     // OMELETES
@@ -201,19 +247,21 @@ const MENU_DATA = [
         id: 'om1',
         title: 'Omelete de 2 Ovos Especial',
         category: 'omeletes',
-        description: 'Ovos caipiras batidos com cebolinha fresca e presunto picadinho.',
-        image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80',
+        description: 'Ovos caipiras batidos com cebolinha fresca, presunto picadinho e queijo derretido.',
+        image: PASTEL_IMGS.omelete,
         rating: '4.8',
-        prices: { P: 10.90, M: 10.90, G: 10.90 }
+        hasSizes: false,
+        prices: { P: 10.90 }
     },
     {
         id: 'om2',
         title: 'Omelete de 3 Ovos Especial',
         category: 'omeletes',
-        description: 'Recheio farto de 3 ovos com presunto picado e tempero de cebolinha.',
-        image: 'https://images.unsplash.com/photo-1510693206972-df098062cb71?auto=format&fit=crop&w=800&q=80',
+        description: 'Recheio farto de 3 ovos com presunto picado, queijo muçarela e tempero verde.',
+        image: PASTEL_IMGS.omelete,
         rating: '4.9',
-        prices: { P: 11.90, M: 11.90, G: 11.90 }
+        hasSizes: false,
+        prices: { P: 11.90 }
     },
 
     // BEBIDAS
@@ -221,108 +269,122 @@ const MENU_DATA = [
         id: 'b1',
         title: 'Refrigerante Lata (350ml)',
         category: 'bebidas',
-        description: 'Coca-Cola, Guaraná, Fanta ou Soda geladíssima.',
-        image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80',
+        description: 'Coca-Cola Original, Coca Zero, Guaraná Antarctica, Fanta Laranja ou Sprite geladíssima.',
+        badge: 'Geladinho',
+        image: PASTEL_IMGS.bebida,
         rating: '5.0',
-        prices: { P: 6.00, M: 6.00, G: 6.00 }
+        hasSizes: false,
+        prices: { P: 6.00 }
     },
     {
         id: 'b2',
         title: 'Refrigerante 2 Litros',
         category: 'bebidas',
-        description: 'Garrafa 2 Litros bem gelada para acompanhar seu pedido.',
+        description: 'Garrafa 2 Litros bem gelada para acompanhar seu pedido em família.',
         image: 'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?auto=format&fit=crop&w=800&q=80',
         rating: '4.9',
-        prices: { P: 15.00, M: 15.00, G: 15.00 }
+        hasSizes: false,
+        prices: { P: 15.00 }
     },
     {
         id: 'b3',
-        title: 'Cerveja Trincando de Gelada',
+        title: 'Cerveja Long Neck Gelada',
         category: 'bebidas',
-        description: 'Cerveja geladíssima lata/garrafa.',
+        description: 'Cerveja trincando de gelada para acompanhar seu pastel favorito.',
         image: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=800&q=80',
         rating: '5.0',
-        prices: { P: 12.00, M: 12.00, G: 12.00 }
+        hasSizes: false,
+        prices: { P: 12.00 }
     }
 ];
 
 // State Management
 let currentCategory = 'todos';
 let cart = [];
-let deliveryType = 'delivery';
-
-// DOM Elements
-const menuGrid = document.getElementById('menu-grid');
-const filterBtns = document.querySelectorAll('.filter-btn');
-const cartToggle = document.getElementById('cart-toggle');
-const cartDrawer = document.getElementById('cart-drawer');
-const cartClose = document.getElementById('cart-close');
-const cartOverlay = document.getElementById('cart-overlay');
-const cartItemsContainer = document.getElementById('cart-items-container');
-const cartCount = document.getElementById('cart-count');
-const cartTotalHeader = document.getElementById('cart-total-header');
-const cartSubtotal = document.getElementById('cart-subtotal');
-const cartDeliveryFee = document.getElementById('cart-delivery-fee');
-const cartGrandTotal = document.getElementById('cart-grand-total');
-const btnSendWhatsapp = document.getElementById('btn-send-whatsapp');
-const delBtns = document.querySelectorAll('.del-btn');
-const paymentMethod = document.getElementById('payment-method');
+let fulfillmentType = 'delivery';
+let selectedPayment = 'Pix (Chave Copia e Cola)';
+const selectedSizes = {};
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', () => {
     renderMenu();
-    setupFilters();
-    setupCartDrawer();
-    setupCheckoutForm();
-    updateCart();
+    setupCategoryFilters();
+    setupCartDrawerListeners();
+    setupStoreStatus();
+    updateCartUI();
 });
 
 // Render Menu Cards
 function renderMenu() {
+    const menuGrid = document.getElementById('menu-grid');
     if (!menuGrid) return;
     
     const filteredData = currentCategory === 'todos' 
         ? MENU_DATA 
         : MENU_DATA.filter(item => item.category === currentCategory);
 
-    menuGrid.innerHTML = filteredData.map(item => `
+    menuGrid.innerHTML = filteredData.map(item => {
+        const defaultSize = selectedSizes[item.id] || 'P';
+        const currentPrice = item.prices[defaultSize] || item.prices.P || 0;
+        const isPastelOrCesto = item.hasSizes !== false;
+
+        return `
         <div class="menu-card" data-id="${item.id}">
             <div class="card-img-box">
                 <img src="${item.image}" alt="${item.title}" class="card-img" loading="lazy">
                 ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ''}
-                <div class="card-rating"><i data-lucide="star" style="width:14px; height:14px; fill:#FFC107;"></i> ${item.rating}</div>
+                <div class="card-rating"><i data-lucide="star" style="width:14px; height:14px; fill:#FFC107; color:#FFC107;"></i> ${item.rating}</div>
             </div>
             <div class="card-body">
                 <h3 class="card-title">${item.title}</h3>
                 <p class="card-desc">${item.description}</p>
 
-                <!-- Size Selector for Pastéis/Items -->
+                ${isPastelOrCesto ? `
                 <div class="size-selector">
-                    <button class="size-btn active" data-size="P" onclick="selectSize('${item.id}', 'P')">Médio</button>
-                    <button class="size-btn" data-size="G" onclick="selectSize('${item.id}', 'G')">Grande (+R$ 5)</button>
+                    <button type="button" class="size-btn ${defaultSize === 'P' ? 'active' : ''}" data-size="P" onclick="selectSize('${item.id}', 'P')">
+                        ${item.category === 'porcoes' ? 'Média (400g)' : (item.category === 'cestinhos' ? 'Médio (2-3 pess.)' : 'Médio')}
+                    </button>
+                    <button type="button" class="size-btn ${defaultSize === 'G' ? 'active' : ''}" data-size="G" onclick="selectSize('${item.id}', 'G')">
+                        ${item.category === 'porcoes' ? 'Grande (600g)' : (item.category === 'cestinhos' ? 'Grande (4-5 pess.)' : 'Grande (+R$ 5)')}
+                    </button>
                 </div>
+                ` : `
+                <div style="height: 12px;"></div>
+                `}
 
                 <div class="card-bottom">
-                    <div>
-                        <span class="price-label">A partir de</span>
-                        <div class="price-value" id="price-display-${item.id}">R$ ${item.prices.P.toFixed(2).replace('.', ',')}</div>
+                    <div class="card-price">
+                        <span class="price-label">${isPastelOrCesto ? 'A partir de' : 'Preço'}</span>
+                        <div class="price-value" id="price-display-${item.id}">R$ ${currentPrice.toFixed(2).replace('.', ',')}</div>
                     </div>
-                    <button class="btn-add-item" onclick="addToCart('${item.id}')">
+                    <button type="button" class="btn-add-item" onclick="addToCart('${item.id}')" aria-label="Adicionar ${item.title} ao pedido">
                         <i data-lucide="plus" style="width:16px; height:16px;"></i> Adicionar
                     </button>
                 </div>
             </div>
         </div>
-    `).join('');
+        `;
+    }).join('');
 
     if (window.lucide) {
         lucide.createIcons();
     }
 }
 
-// Track Selected Sizes per Item
-const selectedSizes = {};
+// Category Filter Setup
+function setupCategoryFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = btn.dataset.category || 'todos';
+            renderMenu();
+        });
+    });
+}
 
+// Track Selected Sizes per Item
 function selectSize(itemId, size) {
     selectedSizes[itemId] = size;
     const card = document.querySelector(`.menu-card[data-id="${itemId}"]`);
@@ -333,7 +395,7 @@ function selectSize(itemId, size) {
         if (activeBtn) activeBtn.classList.add('active');
 
         const item = MENU_DATA.find(i => i.id === itemId);
-        if (item) {
+        if (item && item.prices && item.prices[size] !== undefined) {
             const displayPrice = card.querySelector(`#price-display-${itemId}`);
             if (displayPrice) {
                 displayPrice.innerText = `R$ ${item.prices[size].toFixed(2).replace('.', ',')}`;
@@ -341,13 +403,38 @@ function selectSize(itemId, size) {
         }
     }
 }
+window.selectSize = selectSize;
 
-// --- CLAEM MASTER TEMPLATE CART LOGIC FOR PANAZZOLO ---
-let fulfillmentType = 'delivery';
-let selectedPayment = 'Pix (Chave Copia e Cola)';
-const deliveryFee = 5.00;
-const CLIENT_WHATSAPP_PANAZZOLO = '5554994297117';
-const PIX_KEY_PANAZZOLO = '(54) 99429-7117';
+// Store Opening Status Calculation
+function setupStoreStatus() {
+    const statusBadge = document.getElementById('status-badge');
+    if (!statusBadge) return;
+
+    const now = new Date();
+    const day = now.getDay(); // 0-6
+    const hour = now.getHours() + (now.getMinutes() / 60);
+
+    const todayRule = CLIENT_CONFIG.hours[day];
+    let isOpen = false;
+
+    if (todayRule && hour >= todayRule.open && hour < todayRule.close) {
+        isOpen = true;
+    }
+
+    if (isOpen) {
+        statusBadge.className = 'status-badge open';
+        statusBadge.innerHTML = `
+            <span class="status-dot"></span>
+            <span class="status-text">Aberto Agora • Pedidos no WhatsApp</span>
+        `;
+    } else {
+        statusBadge.className = 'status-badge closed';
+        statusBadge.innerHTML = `
+            <span class="status-dot" style="background:#EF4444; box-shadow:0 0 10px #EF4444;"></span>
+            <span class="status-text">Fechado no Momento • Aceitamos Encomendas</span>
+        `;
+    }
+}
 
 // Add Item to Cart
 function addToCart(itemId) {
@@ -355,10 +442,14 @@ function addToCart(itemId) {
     if (!item) return;
 
     const size = selectedSizes[itemId] || 'P';
-    const price = item.prices ? item.prices[size] : item.price;
-    const sizeLabel = size === 'P' ? 'Médio' : 'Grande';
+    const price = item.prices ? (item.prices[size] || item.prices.P) : item.prices.P;
+    
+    let sizeLabel = '';
+    if (item.hasSizes !== false) {
+        sizeLabel = size === 'P' ? 'Médio' : 'Grande';
+    }
 
-    const itemTitle = item.title + (item.hasSizes !== false ? ` (${sizeLabel})` : '');
+    const itemTitle = item.title + (sizeLabel ? ` (${sizeLabel})` : '');
     const existing = cart.find(c => c.id === itemId && c.size === sizeLabel);
 
     if (existing) {
@@ -376,7 +467,7 @@ function addToCart(itemId) {
 
     updateCartUI();
     openCart();
-    showToast(`🥟 <strong>${itemTitle}</strong> foi adicionado ao seu carrinho!`);
+    showToast(`🥟 <strong>${itemTitle}</strong> foi adicionado ao seu pedido!`);
 }
 window.addToCart = addToCart;
 
@@ -444,7 +535,7 @@ function setupCartDrawerListeners() {
 function updateCartUI() {
     const totalQuantity = cart.reduce((sum, i) => sum + i.quantity, 0);
     const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-    const activeDeliveryFee = fulfillmentType === 'delivery' ? (subtotal > 0 ? deliveryFee : 0) : 0;
+    const activeDeliveryFee = fulfillmentType === 'delivery' ? (subtotal > 0 ? CLIENT_CONFIG.deliveryFee : 0) : 0;
     const finalTotal = subtotal + activeDeliveryFee;
 
     const cartCountEl = document.getElementById('cart-count');
@@ -472,7 +563,7 @@ function updateCartUI() {
 
     const pixQrImg = document.getElementById('pix-qr-img');
     if (pixQrImg) {
-        const qrData = encodeURIComponent(`Chave Pix Panazzolo: ${CLIENT_WHATSAPP_PANAZZOLO} | Valor: R$ ${finalTotal.toFixed(2).replace('.', ',')}`);
+        const qrData = encodeURIComponent(`Chave Pix Panazzolo: ${CLIENT_CONFIG.pixKey} | Valor: R$ ${finalTotal.toFixed(2).replace('.', ',')}`);
         pixQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${qrData}`;
     }
 
@@ -482,7 +573,7 @@ function updateCartUI() {
     if (cart.length === 0) {
         container.innerHTML = `
             <div class="cart-empty" style="text-align: center; padding: 40px 20px; color: #A1A1AA;">
-                <i data-lucide="shopping-bag" style="width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.5;"></i>
+                <i data-lucide="shopping-bag" style="width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.5; color: var(--primary);"></i>
                 <p style="font-weight: 700; color: #FFF; margin-bottom: 4px;">Seu carrinho está vazio.</p>
                 <span style="font-size: 0.85rem;">Escolha os melhores pastéis no cardápio acima!</span>
             </div>
@@ -526,24 +617,19 @@ function closeCart() {
     document.body.style.overflow = 'auto';
 }
 
-function toggleCartDrawer(show = true) {
-    if (show) openCart();
-    else closeCart();
-}
 window.openCart = openCart;
 window.closeCart = closeCart;
 window.closeCartDrawer = closeCart;
-window.toggleCartDrawer = toggleCartDrawer;
 
 function copyPixKey() {
     const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-    const activeDeliveryFee = fulfillmentType === 'delivery' ? deliveryFee : 0;
+    const activeDeliveryFee = fulfillmentType === 'delivery' ? CLIENT_CONFIG.deliveryFee : 0;
     const finalTotal = subtotal + activeDeliveryFee;
 
     const copyBtn = document.getElementById('btn-copy-pix-key');
 
     const handleSuccess = () => {
-        showToast(`Chave Pix (${PIX_KEY_PANAZZOLO}) copiada! Valor: R$ ${finalTotal.toFixed(2).replace('.', ',')}`);
+        showToast(`⚡ Chave Pix (${CLIENT_CONFIG.phoneFormatted}) copiada! Valor: R$ ${finalTotal.toFixed(2).replace('.', ',')}`);
         
         if (copyBtn) {
             copyBtn.classList.add('copied');
@@ -559,7 +645,7 @@ function copyPixKey() {
     };
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(CLIENT_WHATSAPP_PANAZZOLO).then(handleSuccess).catch(handleSuccess);
+        navigator.clipboard.writeText(CLIENT_CONFIG.pixKey).then(handleSuccess).catch(handleSuccess);
     } else {
         handleSuccess();
     }
@@ -584,7 +670,7 @@ window.showToast = showToast;
 
 function sendWhatsAppOrder() {
     if (cart.length === 0) {
-        alert('Seu carrinho está vazio! Adicione pelo menos um item antes de finalizar.');
+        alert('Seu carrinho está vazio! Adicione pelo menos um pastel ou porção antes de finalizar.');
         return;
     }
 
@@ -599,7 +685,7 @@ function sendWhatsAppOrder() {
     }
 
     const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-    const activeDeliveryFee = fulfillmentType === 'delivery' ? deliveryFee : 0;
+    const activeDeliveryFee = fulfillmentType === 'delivery' ? CLIENT_CONFIG.deliveryFee : 0;
     const finalTotal = subtotal + activeDeliveryFee;
 
     let msg = `🥟 *NOVO PEDIDO - PASTELARIA PANAZZOLO*\n`;
@@ -629,7 +715,7 @@ function sendWhatsAppOrder() {
     const isPix = selectedPayment.toLowerCase().includes('pix');
 
     if (isPix) {
-        msg += `⚡ *PIX (Chave: ${PIX_KEY_PANAZZOLO} - Valor: R$ ${finalTotal.toFixed(2).replace('.', ',')})*\n`;
+        msg += `⚡ *PIX (Chave: ${CLIENT_CONFIG.phoneFormatted} - Valor: R$ ${finalTotal.toFixed(2).replace('.', ',')})*\n`;
         msg += `_Anexando o comprovante em seguida!_\n`;
     } else if (isCash) {
         msg += `💵 *Dinheiro* ${cashChange ? `(Troco para R$ ${cashChange})` : '(Sem troco)'}\n`;
@@ -637,16 +723,10 @@ function sendWhatsAppOrder() {
         msg += `💳 *Cartão de Crédito/Débito (Levar maquininha)*\n`;
     }
 
-    msg += `\n_Pedido enviado pelo Site Oficial Pastelaria Panazzolo_`;
+    msg += `\n_Pedido gerado pelo Canal Oficial da Panazzolo Pastelaria_`;
 
-    const url = `https://wa.me/${CLIENT_WHATSAPP_PANAZZOLO}?text=${encodeURIComponent(msg)}`;
+    const url = `https://wa.me/${CLIENT_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank');
 }
 window.sendWhatsAppOrder = sendWhatsAppOrder;
 window.submitOrderWhatsApp = sendWhatsAppOrder;
-
-// Call listeners setup on init
-document.addEventListener('DOMContentLoaded', () => {
-    setupCartDrawerListeners();
-});
-
