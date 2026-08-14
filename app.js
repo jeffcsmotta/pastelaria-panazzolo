@@ -428,13 +428,13 @@ function setupStoreStatus() {
             badge.className = 'status-badge open';
             badge.innerHTML = `
                 <span class="status-dot"></span>
-                <span class="status-text">Aberto Agora • Pedidos no WhatsApp</span>
+                <span class="status-text">Aberto</span>
             `;
         } else {
             badge.className = 'status-badge closed';
             badge.innerHTML = `
-                <span class="status-dot" style="background:#EF4444; box-shadow:0 0 10px #EF4444;"></span>
-                <span class="status-text">Fechado no Momento • Aceitamos Encomendas</span>
+                <span class="status-dot"></span>
+                <span class="status-text">Fechado</span>
             `;
         }
     });
