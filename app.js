@@ -3,12 +3,12 @@
    Rua Luiz Antunes, 683 (Sala 1) • Panazzolo, Caxias do Sul - RS
    ========================================================================== */
 
-// Client Business Configuration
+// Client Business Configuration (Official WhatsApp: +55 54 9429-7117)
 const CLIENT_CONFIG = {
     name: 'Panazzolo Pastelaria',
-    phoneFormatted: '(54) 99429-7117',
-    whatsappNumber: '5554994297117',
-    pixKey: '54994297117',
+    phoneFormatted: '(54) 9429-7117',
+    whatsappNumber: '555494297117',
+    pixKey: '5494297117',
     address: 'Rua Luiz Antunes, 683 - Sala 1, Panazzolo, Caxias do Sul - RS',
     deliveryFee: 5.00,
     hours: {
@@ -380,6 +380,9 @@ function setupCategoryFilters() {
             btn.classList.add('active');
             currentCategory = btn.dataset.category || 'todos';
             renderMenu();
+            
+            // Scroll selected pill into view smoothly in mobile carousel
+            btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         });
     });
 }
@@ -407,8 +410,7 @@ window.selectSize = selectSize;
 
 // Store Opening Status Calculation
 function setupStoreStatus() {
-    const statusBadge = document.getElementById('status-badge');
-    if (!statusBadge) return;
+    const statusBadges = document.querySelectorAll('#status-badge, .status-badge');
 
     const now = new Date();
     const day = now.getDay(); // 0-6
@@ -421,19 +423,21 @@ function setupStoreStatus() {
         isOpen = true;
     }
 
-    if (isOpen) {
-        statusBadge.className = 'status-badge open';
-        statusBadge.innerHTML = `
-            <span class="status-dot"></span>
-            <span class="status-text">Aberto Agora • Pedidos no WhatsApp</span>
-        `;
-    } else {
-        statusBadge.className = 'status-badge closed';
-        statusBadge.innerHTML = `
-            <span class="status-dot" style="background:#EF4444; box-shadow:0 0 10px #EF4444;"></span>
-            <span class="status-text">Fechado no Momento • Aceitamos Encomendas</span>
-        `;
-    }
+    statusBadges.forEach(badge => {
+        if (isOpen) {
+            badge.className = 'status-badge open';
+            badge.innerHTML = `
+                <span class="status-dot"></span>
+                <span class="status-text">Aberto Agora • Pedidos no WhatsApp</span>
+            `;
+        } else {
+            badge.className = 'status-badge closed';
+            badge.innerHTML = `
+                <span class="status-dot" style="background:#EF4444; box-shadow:0 0 10px #EF4444;"></span>
+                <span class="status-text">Fechado no Momento • Aceitamos Encomendas</span>
+            `;
+        }
+    });
 }
 
 // Add Item to Cart
@@ -467,7 +471,7 @@ function addToCart(itemId) {
 
     updateCartUI();
     openCart();
-    showToast(`🥟 <strong>${itemTitle}</strong> foi adicionado ao seu pedido!`);
+    showToast(`🥟 <strong>${itemTitle}</strong> adicionado ao pedido!`);
 }
 window.addToCart = addToCart;
 
@@ -488,6 +492,15 @@ function changeQuantity(index, delta) {
     }
 }
 window.changeQuantity = changeQuantity;
+
+// Clear all items from cart
+function clearCart() {
+    if (cart.length === 0) return;
+    cart = [];
+    updateCartUI();
+    showToast('🗑️ Carrinho esvaziado com sucesso!');
+}
+window.clearCart = clearCart;
 
 function setupCartDrawerListeners() {
     const fulfillmentBtns = document.querySelectorAll('.del-btn');
@@ -538,11 +551,11 @@ function updateCartUI() {
     const activeDeliveryFee = fulfillmentType === 'delivery' ? (subtotal > 0 ? CLIENT_CONFIG.deliveryFee : 0) : 0;
     const finalTotal = subtotal + activeDeliveryFee;
 
-    const cartCountEl = document.getElementById('cart-count');
-    if (cartCountEl) cartCountEl.innerText = totalQuantity;
+    const cartCountEls = document.querySelectorAll('#cart-count, .cart-count');
+    cartCountEls.forEach(el => el.innerText = totalQuantity);
     
-    const cartTotalHeader = document.getElementById('cart-total-header');
-    if (cartTotalHeader) cartTotalHeader.innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+    const cartTotalHeaders = document.querySelectorAll('#cart-total-header, .cart-total-header');
+    cartTotalHeaders.forEach(el => el.innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`);
 
     const cartSubtotalEl = document.getElementById('cart-subtotal');
     const cartDeliveryFeeEl = document.getElementById('cart-delivery-fee');
@@ -565,6 +578,12 @@ function updateCartUI() {
     if (pixQrImg) {
         const qrData = encodeURIComponent(`Chave Pix Panazzolo: ${CLIENT_CONFIG.pixKey} | Valor: R$ ${finalTotal.toFixed(2).replace('.', ',')}`);
         pixQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${qrData}`;
+    }
+
+    // Toggle clear cart button visibility
+    const clearCartBtn = document.getElementById('btn-clear-cart');
+    if (clearCartBtn) {
+        clearCartBtn.style.display = cart.length > 0 ? 'inline-flex' : 'none';
     }
 
     const container = document.getElementById('cart-items-container');
@@ -621,6 +640,23 @@ window.openCart = openCart;
 window.closeCart = closeCart;
 window.closeCartDrawer = closeCart;
 
+function fallbackCopyText(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-9999px';
+    textArea.style.top = '0';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+    } catch (err) {
+        console.warn('Fallback copy error:', err);
+    }
+    document.body.removeChild(textArea);
+}
+
 function copyPixKey() {
     const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
     const activeDeliveryFee = fulfillmentType === 'delivery' ? CLIENT_CONFIG.deliveryFee : 0;
@@ -645,8 +681,14 @@ function copyPixKey() {
     };
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(CLIENT_CONFIG.pixKey).then(handleSuccess).catch(handleSuccess);
+        navigator.clipboard.writeText(CLIENT_CONFIG.pixKey)
+            .then(handleSuccess)
+            .catch(() => {
+                fallbackCopyText(CLIENT_CONFIG.pixKey);
+                handleSuccess();
+            });
     } else {
+        fallbackCopyText(CLIENT_CONFIG.pixKey);
         handleSuccess();
     }
 }

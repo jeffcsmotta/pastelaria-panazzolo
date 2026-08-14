@@ -2,14 +2,14 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Panazzolo Pastelaria | Os Melhores Pastéis do Panazzolo - Caxias do Sul</title>
     <meta name="description" content="🥟 Panazzolo Pastelaria — O pastel mais crocante e recheado de Caxias do Sul! Pastéis salgados, doces, cestinhos mistos, porções e omeletes na Rua Luiz Antunes, 683. Delivery rápido no Panazzolo!">
     <meta name="keywords" content="Pastelaria Caxias do Sul, Pastel Panazzolo, Panazzolo Pastelaria, Delivery Pastel Panazzolo, Cesto Misto Caxias do Sul, Rua Luiz Antunes 683">
 
     <!-- PWA Manifest & Icons -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#F59E0B">
+    <meta name="theme-color" content="#0B0B0C">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Panazzolo">
@@ -141,7 +141,7 @@
         }
     </style>
 
-    <link rel="stylesheet" href="style.css?v=20260814-v7">
+    <link rel="stylesheet" href="style.css?v=20260814-v8">
 </head>
 <body>
 
@@ -158,7 +158,7 @@
         </div>
     </div>
 
-    <!-- Top Announcement Bar -->
+    <!-- Top Announcement Bar (Desktop Only) -->
     <div class="top-bar">
         <div class="container top-bar-content">
             <div class="top-info">
@@ -171,21 +171,22 @@
                     <i data-lucide="download"></i>
                     <span>Instalar App</span>
                 </button>
-                <a href="https://wa.me/5554994297117" target="_blank" rel="noopener noreferrer" class="top-wa" aria-label="WhatsApp Panazzolo Pastelaria">
+                <a href="https://wa.me/555494297117" target="_blank" rel="noopener noreferrer" class="top-wa" aria-label="WhatsApp Panazzolo Pastelaria">
                     <i data-lucide="phone"></i>
-                    <span>WhatsApp: (54) 99429-7117</span>
+                    <span>WhatsApp: (54) 9429-7117</span>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Header Navigation -->
+    <!-- Header Navigation (App Experience on Mobile) -->
     <header class="header">
         <div class="container header-container">
             <a href="#" class="logo" aria-label="Página Inicial da Panazzolo Pastelaria">
                 <img src="assets/logo.svg" alt="Panazzolo Pastel Y Pizza Logo" class="brand-logo-img">
             </a>
 
+            <!-- Desktop Only Navigation -->
             <nav class="nav-links">
                 <a href="#cardapio" class="nav-link active">Cardápio</a>
                 <a href="#sobre" class="nav-link">Sobre Nós</a>
@@ -195,7 +196,7 @@
             </nav>
 
             <div class="header-actions">
-                <button type="button" class="btn-install-header" onclick="window.triggerPWAInstall()" aria-label="Instalar App no Celular">
+                <button type="button" class="btn-install-header desktop-only" onclick="window.triggerPWAInstall()" aria-label="Instalar App no Celular">
                     <i data-lucide="smartphone"></i>
                     <span>Baixar App</span>
                 </button>
@@ -212,8 +213,8 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
+    <!-- Hero Section (Desktop/Tablet Branding) -->
+    <section class="hero desktop-hero" id="home">
         <img src="assets/hero.png" alt="Panazzolo Pastelaria Fachada e Pastéis" class="hero-bg-img">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
@@ -225,51 +226,53 @@
                 <span class="highlight">e recheado do Panazzolo! 🥟</span>
             </h1>
             <p class="hero-description">
-                Massa leve, sequinha e dourada com recheios fartos preparados na hora na Rua Luiz Antunes, 683. Experimente nossos pastéis salgados, pastéis doces, cestinhos mistos para compartilhar e porções crocantes. Delivery rápido direto no Panazzolo!
+                Massa leve, sequinha e dourada com recheios fartos preparados na hora na Rua Luiz Antunes, 683. Experimente nossos pastéis salgados, pastéis doces, cestinhos mistos para compartilhar e porções crocantes. Delivery rápido no Panazzolo!
             </p>
             <div class="hero-buttons">
                 <a href="#cardapio" class="btn btn-primary">
                     <i data-lucide="utensils"></i> Ver Cardápio & Pedir
                 </a>
-                <a href="https://wa.me/5554994297117?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20pedido%20na%20Panazzolo%20Pastelaria." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
-                    <i data-lucide="phone"></i> Pedir pelo WhatsApp (54) 99429-7117
+                <a href="https://wa.me/555494297117?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20pedido%20na%20Panazzolo%20Pastelaria." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+                    <i data-lucide="phone"></i> Pedir pelo WhatsApp (54) 9429-7117
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Menu Section (LIGHT CONTAINER) -->
+    <!-- Menu Section (LIGHT CONTAINER - APP-LIKE SWIPEABLE TABS ON MOBILE) -->
     <section class="section menu-section" id="cardapio">
         <div class="container">
             <div class="section-header text-center">
                 <span class="subtitle">NOSSO CARDÁPIO COMPLETO</span>
                 <h2 class="title">Escolha o seu Pastel Favorito</h2>
-                <p class="section-desc">Monte seu pedido online em instantes e envie direto para nosso WhatsApp oficial.</p>
+                <p class="section-desc">Monte seu pedido em instantes e envie direto para nosso WhatsApp oficial.</p>
             </div>
 
-            <!-- Category Filters -->
-            <div class="category-filters">
-                <button class="filter-btn active" data-category="todos">
-                    <i data-lucide="grid"></i> Todos os Itens
-                </button>
-                <button class="filter-btn" data-category="salgados">
-                    <i data-lucide="utensils"></i> Pastéis Salgados
-                </button>
-                <button class="filter-btn" data-category="doces">
-                    <i data-lucide="cookie"></i> Pastéis Doces
-                </button>
-                <button class="filter-btn" data-category="cestinhos">
-                    <i data-lucide="gift"></i> Cestinhos Mistos
-                </button>
-                <button class="filter-btn" data-category="porcoes">
-                    <i data-lucide="flame"></i> Porções
-                </button>
-                <button class="filter-btn" data-category="omeletes">
-                    <i data-lucide="egg"></i> Omeletes
-                </button>
-                <button class="filter-btn" data-category="bebidas">
-                    <i data-lucide="coffee"></i> Bebidas
-                </button>
+            <!-- Category Filters (Horizontal Swipeable Tabs on Mobile) -->
+            <div class="category-filters-container">
+                <div class="category-filters" id="category-filters">
+                    <button type="button" class="filter-btn active" data-category="todos">
+                        <i data-lucide="grid"></i> Todos
+                    </button>
+                    <button type="button" class="filter-btn" data-category="salgados">
+                        <i data-lucide="utensils"></i> Salgados
+                    </button>
+                    <button type="button" class="filter-btn" data-category="doces">
+                        <i data-lucide="cookie"></i> Doces
+                    </button>
+                    <button type="button" class="filter-btn" data-category="cestinhos">
+                        <i data-lucide="gift"></i> Cestinhos
+                    </button>
+                    <button type="button" class="filter-btn" data-category="porcoes">
+                        <i data-lucide="flame"></i> Porções
+                    </button>
+                    <button type="button" class="filter-btn" data-category="omeletes">
+                        <i data-lucide="egg"></i> Omeletes
+                    </button>
+                    <button type="button" class="filter-btn" data-category="bebidas">
+                        <i data-lucide="coffee"></i> Bebidas
+                    </button>
+                </div>
             </div>
 
             <!-- Menu Grid -->
@@ -300,8 +303,8 @@
                     <div class="about-contact-box">
                         <h3><i data-lucide="sparkles"></i> Peça sem complicação</h3>
                         <p>Atendimento direto e rápido no WhatsApp oficial do bairro Panazzolo.</p>
-                        <a href="https://wa.me/5554994297117?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20pedido%20na%20Panazzolo%20Pastelaria." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-block">
-                            <i data-lucide="phone"></i> WhatsApp: (54) 99429-7117
+                        <a href="https://wa.me/555494297117?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20pedido%20na%20Panazzolo%20Pastelaria." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-block">
+                            <i data-lucide="phone"></i> WhatsApp: (54) 9429-7117
                         </a>
                     </div>
                 </div>
@@ -440,7 +443,7 @@
                             <div class="info-icon"><i data-lucide="phone"></i></div>
                             <div>
                                 <strong>WhatsApp Oficial de Pedidos:</strong>
-                                <p><a href="https://wa.me/5554994297117" target="_blank" rel="noopener noreferrer" style="color:var(--primary); font-weight:700;">(54) 99429-7117</a></p>
+                                <p><a href="https://wa.me/555494297117" target="_blank" rel="noopener noreferrer" style="color:var(--primary); font-weight:700;">(54) 9429-7117</a></p>
                             </div>
                         </div>
                     </div>
@@ -484,7 +487,7 @@
             <div class="footer-col">
                 <h4>Contato Direto</h4>
                 <p>📍 Rua Luiz Antunes, 683 - Sala 1, Panazzolo</p>
-                <p>📞 WhatsApp: (54) 99429-7117</p>
+                <p>📞 WhatsApp: (54) 9429-7117</p>
                 <p>📸 Instagram: @panazzolopastelaria</p>
             </div>
         </div>
@@ -510,9 +513,15 @@
         
         <!-- Single Unified Scrollable Body -->
         <div class="cart-body">
-            <!-- Cart Items Section -->
+            <!-- Cart Items Section with Clean "Limpar Carrinho" Button -->
             <div class="cart-section">
-                <div class="cart-section-title">ITENS DO PEDIDO</div>
+                <div class="cart-section-header">
+                    <span class="cart-section-title">ITENS DO PEDIDO</span>
+                    <button type="button" class="btn-clear-cart" id="btn-clear-cart" onclick="window.clearCart()" aria-label="Esvaziar Carrinho">
+                        <i data-lucide="trash-2" style="width:13px; height:13px;"></i>
+                        <span>Limpar</span>
+                    </button>
+                </div>
                 <div id="cart-items-container" class="cart-items-container">
                     <!-- JS populated -->
                 </div>
@@ -565,7 +574,7 @@
                         <span>Pix Copia e Cola &amp; QR Code (Valor Travado)</span>
                     </div>
                     <div class="pix-qr-container">
-                        <img id="pix-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&amp;data=54994297117" alt="Pix QR Code Panazzolo" class="pix-qr-code">
+                        <img id="pix-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&amp;data=5494297117" alt="Pix QR Code Panazzolo" class="pix-qr-code">
                         <div class="pix-qr-info">
                             <p class="pix-lock-desc">
                                 Valor exato: <strong id="pix-locked-amount" style="color:#FFF;">R$ 0,00</strong>.<br>
@@ -628,17 +637,17 @@
             </div>
         </div>
         <div class="pwa-install-actions">
-            <button id="btn-pwa-install" class="btn-pwa-action" onclick="window.triggerPWAInstall()">Instalar</button>
+            <button id="btn-pwa-action" class="btn-pwa-action" onclick="window.triggerPWAInstall()">Instalar</button>
             <button class="btn-pwa-close" onclick="window.dismissPWA()" aria-label="Fechar banner de instalação">&times;</button>
         </div>
     </div>
 
     <!-- Floating WhatsApp Customer Service Button -->
-    <a href="https://wa.me/5554994297117?text=Ol%C3%A1!%20Gostaria%20de%20atendimento%20na%20Panazzolo%20Pastelaria." target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Falar com atendimento no WhatsApp">
+    <a href="https://wa.me/555494297117?text=Ol%C3%A1!%20Gostaria%20de%20atendimento%20na%20Panazzolo%20Pastelaria." target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Falar com atendimento no WhatsApp">
         <i data-lucide="message-circle" aria-hidden="true"></i>
     </a>
 
-    <script src="app.js?v=20260814-v7"></script>
+    <script src="app.js?v=20260814-v8"></script>
     <script>
         // PWA Splash Screen Handler
         window.addEventListener('DOMContentLoaded', () => {
