@@ -741,35 +741,45 @@ function copyPixKey() {
 }
 window.copyPixKey = copyPixKey;
 
-function showToast(message) {
+function showToast(message, type = 'success') {
     let toast = document.getElementById('toast-notification');
     if (!toast) {
         toast = document.createElement('div');
         toast.id = 'toast-notification';
-        toast.className = 'toast-box';
         document.body.appendChild(toast);
     }
+    toast.className = `toast-box ${type === 'error' ? 'toast-error' : 'toast-success'}`;
     toast.innerHTML = message;
     toast.classList.add('show');
-    setTimeout(() => {
+
+    if (window._toastTimeout) clearTimeout(window._toastTimeout);
+    window._toastTimeout = setTimeout(() => {
         toast.classList.remove('show');
-    }, 3000);
+    }, 4000);
 }
 window.showToast = showToast;
 
 function sendWhatsAppOrder() {
     if (cart.length === 0) {
-        alert('Seu carrinho está vazio! Adicione pelo menos um pastel ou porção antes de finalizar.');
+        showToast('🥟 <strong>Seu carrinho está vazio!</strong> Adicione um pastel ou porção antes de finalizar.', 'error');
         return;
     }
 
     const customerName = document.getElementById('cust-name') ? document.getElementById('cust-name').value.trim() : '';
-    const customerAddress = document.getElementById('cust-address') ? document.getElementById('cust-address').value.trim() : '';
+    const customerAddressInput = document.getElementById('cust-address');
+    const customerAddress = customerAddressInput ? customerAddressInput.value.trim() : '';
     const cashChange = document.getElementById('cash-change-val') ? document.getElementById('cash-change-val').value.trim() : '';
 
     if (fulfillmentType === 'delivery' && !customerAddress) {
-        alert('Por favor, informe seu endereço completo de entrega!');
-        if (document.getElementById('cust-address')) document.getElementById('cust-address').focus();
+        showToast('📍 <strong>Informe seu endereço de entrega</strong> ou selecione <strong>Retirada no Balcão</strong>!', 'error');
+        if (customerAddressInput) {
+            customerAddressInput.classList.add('input-error');
+            customerAddressInput.focus();
+            customerAddressInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+                customerAddressInput.classList.remove('input-error');
+            }, 3500);
+        }
         return;
     }
 

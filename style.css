@@ -140,7 +140,8 @@ h1, h2, h3, h4, .brand-name {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+    width: 100%;
 }
 
 .logo {
@@ -149,10 +150,11 @@ h1, h2, h3, h4, .brand-name {
     gap: 10px;
     text-decoration: none;
     color: #FFFFFF;
+    flex-shrink: 0;
 }
 
 .brand-logo-img {
-    height: 40px;
+    height: clamp(32px, 4vw, 40px);
     width: auto;
     object-fit: contain;
     transition: transform 0.25s ease;
@@ -172,7 +174,7 @@ h1, h2, h3, h4, .brand-name {
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: clamp(4px, 1.5vw, 8px);
     flex-shrink: 0;
 }
 
@@ -192,6 +194,7 @@ h1, h2, h3, h4, .brand-name {
     transition: all 0.2s ease;
     white-space: nowrap;
     line-height: 1;
+    flex-shrink: 0;
 }
 
 .btn-install-header i {
@@ -220,6 +223,7 @@ h1, h2, h3, h4, .brand-name {
     user-select: none;
     white-space: nowrap;
     line-height: 1;
+    flex-shrink: 0;
 }
 
 .status-dot {
@@ -298,6 +302,7 @@ h1, h2, h3, h4, .brand-name {
     box-shadow: var(--shadow-glow);
     white-space: nowrap;
     line-height: 1;
+    flex-shrink: 0;
 }
 
 .cart-toggle-btn:hover {
@@ -472,6 +477,7 @@ h1, h2, h3, h4, .brand-name {
     justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
+    padding: 4px 0;
 }
 
 .filter-btn {
@@ -490,6 +496,7 @@ h1, h2, h3, h4, .brand-name {
     transition: all 0.2s ease;
     white-space: nowrap;
     user-select: none;
+    flex-shrink: 0;
 }
 
 .filter-btn:hover {
@@ -1008,7 +1015,7 @@ h1, h2, h3, h4, .brand-name {
     top: 0;
     right: -520px;
     width: 100%;
-    max-width: 480px;
+    max-width: 440px;
     height: 100vh;
     background: #0B0B0C;
     border-left: 1px solid rgba(255, 255, 255, 0.12);
@@ -1028,21 +1035,23 @@ h1, h2, h3, h4, .brand-name {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 20px;
+    padding: 16px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     background: #0B0B0C;
     flex-shrink: 0;
     z-index: 10;
+    gap: 10px;
 }
 
 .cart-header-title {
     color: #FFFFFF !important;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 800;
     display: flex;
     align-items: center;
     gap: 8px;
     font-family: var(--font-heading);
+    white-space: nowrap;
 }
 
 .cart-header-title i {
@@ -1056,18 +1065,20 @@ h1, h2, h3, h4, .brand-name {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 14px;
+    padding: 7px 13px;
     background: rgba(245, 158, 11, 0.15) !important;
     border: 1px solid #F59E0B !important;
     border-radius: 9999px;
     color: #F59E0B !important;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 800;
     font-family: var(--font-heading);
     cursor: pointer;
     transition: all 0.2s ease;
     text-decoration: none;
     user-select: none;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .btn-continue-shopping:hover {
@@ -1271,12 +1282,26 @@ h1, h2, h3, h4, .brand-name {
     color: #FFFFFF;
     font-family: var(--font-body);
     font-size: 0.85rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .input-dark:focus {
     outline: none;
     border-color: #F59E0B;
     box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
+}
+
+/* Input Error Highlight Shake */
+.input-dark.input-error {
+    border-color: #EF4444 !important;
+    box-shadow: 0 0 14px rgba(239, 68, 68, 0.6) !important;
+    animation: inputShake 0.4s ease-in-out;
+}
+
+@keyframes inputShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
 }
 
 /* Pix Lock Info Box with Dynamic QR Code */
@@ -1545,25 +1570,26 @@ h1, h2, h3, h4, .brand-name {
     }
 }
 
-/* Toast Notifications */
+/* Toast Notifications (Z-INDEX 5000: Displays in front of open drawer & modal) */
 .toast-box {
     position: fixed;
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
-    background: #0F172A;
+    background: #111115;
     color: #FFFFFF;
-    border: 1px solid #F59E0B;
-    padding: 12px 20px;
-    border-radius: 30px;
-    font-size: 0.86rem;
+    border: 1.5px solid var(--primary);
+    padding: 12px 22px;
+    border-radius: 14px;
+    font-size: 0.88rem;
     font-weight: 700;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(245, 158, 11, 0.25);
     opacity: 0;
     pointer-events: none;
-    z-index: 3000;
-    transition: all 0.3s ease;
-    max-width: calc(100vw - 32px);
+    z-index: 5000;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width: min(92vw, 480px);
+    width: max-content;
     white-space: normal;
     text-align: center;
     word-break: break-word;
@@ -1573,6 +1599,17 @@ h1, h2, h3, h4, .brand-name {
     opacity: 1;
     pointer-events: auto;
     transform: translateX(-50%) translateY(0);
+}
+
+.toast-box.toast-error {
+    border-color: #EF4444 !important;
+    background: #1C1214 !important;
+    color: #FEE2E2 !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(239, 68, 68, 0.4) !important;
+}
+
+.toast-box.toast-error strong {
+    color: #F87171 !important;
 }
 
 /* Floating Proposal Badge Button */
@@ -1742,8 +1779,27 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 }
 
 /* ==========================================================================
-   MOBILE APP EXPERIENCE & RESPONSIVENESS (< 768px)
+   RESPONSIVE LAYOUT & BREAKPOINT GUARDS
    ========================================================================== */
+
+@media (max-width: 992px) {
+    .header-container {
+        padding: 0 16px;
+    }
+
+    .category-filters {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding: 4px 16px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .category-filters::-webkit-scrollbar {
+        display: none;
+    }
+}
 
 @media (max-width: 768px) {
     /* 1. Remove Top Announcement Bar on Mobile */
@@ -1761,7 +1817,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 
     /* 2. Sleek Mobile App Header */
     .header {
-        padding: 8px 16px;
+        padding: 8px 12px;
         background: #0B0B0C;
     }
 
@@ -1769,32 +1825,33 @@ button:focus-visible, a:focus-visible, input:focus-visible {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 6px;
     }
 
     .brand-logo-img {
-        height: 38px;
+        height: 36px;
     }
 
     .status-badge {
-        padding: 4px 10px;
+        padding: 4px 8px;
         font-size: 0.72rem;
     }
 
     .cart-clear-btn {
-        width: 34px;
-        height: 34px;
+        width: 32px;
+        height: 32px;
         border-radius: 8px;
     }
 
     .cart-clear-btn i {
-        width: 15px;
-        height: 15px;
+        width: 14px;
+        height: 14px;
     }
 
     .cart-toggle-btn {
-        padding: 7px 12px;
-        font-size: 0.8rem;
-        gap: 6px;
+        padding: 6px 11px;
+        font-size: 0.78rem;
+        gap: 5px;
     }
 
     .cart-total-header {
@@ -1828,7 +1885,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 
     .category-filters-container {
         position: sticky;
-        top: 54px;
+        top: 50px;
         z-index: 900;
         background: #FAFAFC;
         padding: 8px 0;
@@ -1845,6 +1902,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
         gap: 6px;
         padding: 0 16px;
         width: 100%;
+        justify-content: flex-start !important;
     }
 
     .category-filters::-webkit-scrollbar {
@@ -1915,13 +1973,19 @@ button:focus-visible, a:focus-visible, input:focus-visible {
         font-size: 1.5rem;
     }
 
+    /* Full Width Cart Drawer on Mobile Screens */
     .cart-drawer {
+        width: 100%;
         max-width: 100%;
     }
 }
 
 @media (max-width: 480px) {
     .header-actions {
-        gap: 6px;
+        gap: 4px;
+    }
+
+    .header-container {
+        padding: 0 8px;
     }
 }
