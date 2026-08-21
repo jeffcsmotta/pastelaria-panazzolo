@@ -787,7 +787,9 @@ function sendWhatsAppOrder() {
     const activeDeliveryFee = fulfillmentType === 'delivery' ? CLIENT_CONFIG.deliveryFee : 0;
     const total = subtotal + activeDeliveryFee;
 
-    let msg = `${fulfillmentType === 'delivery' ? 'Entrega em domicílio' : 'Retirada no balcão'}
+    let msg = `_pedido via site by Onira.fly_
+
+${fulfillmentType === 'delivery' ? 'Solicitação de Tele-Entrega' : 'Solicitação de Retirada no balcão'}
 
 `;
 
