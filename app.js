@@ -785,44 +785,56 @@ function sendWhatsAppOrder() {
 
     const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
     const activeDeliveryFee = fulfillmentType === 'delivery' ? CLIENT_CONFIG.deliveryFee : 0;
-    const finalTotal = subtotal + activeDeliveryFee;
 
-    let msg = `🥟 *NOVO PEDIDO - PASTELARIA PANAZZOLO*\n`;
-    msg += `------------------------------------\n`;
-    msg += `📦 *Tipo:* ${fulfillmentType === 'delivery' ? '🛵 Delivery em Domicílio' : '🛍️ Retirada no Balcão'}\n`;
-    if (customerName) msg += `👤 *Cliente:* ${customerName}\n`;
-    if (fulfillmentType === 'delivery' && customerAddress) {
-        msg += `🏠 *Endereço:* ${customerAddress}\n`;
-    }
-    msg += `\n*🛒 ITENS DO PEDIDO:*\n`;
+    let msg = `${fulfillmentType === 'delivery' ? 'Entrega em domicílio' : 'Retirada no balcão'}
 
-    cart.forEach((i, idx) => {
+`;
+
+    cart.forEach(i => {
         const itemSum = i.price * i.quantity;
-        msg += `${idx + 1}. *${i.title}*\n`;
-        msg += `   Qtd: ${i.quantity}x • R$ ${itemSum.toFixed(2).replace('.', ',')}\n`;
-        if (i.notes) msg += `   _Obs: ${i.notes}_\n`;
-        msg += `\n`;
+        msg += `*${i.quantity}x* ${i.title}
+`;
+        msg += `R$ ${itemSum.toFixed(2).replace('.', ',')}
+`;
+        if (i.notes) msg += `_Obs: ${i.notes}_
+`;
+        msg += `
+`;
     });
 
-    msg += `------------------------------------\n`;
-    msg += `💰 *Subtotal:* R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
-    msg += `🛵 *Taxa de Entrega:* ${fulfillmentType === 'delivery' ? `R$ ${activeDeliveryFee.toFixed(2).replace('.', ',')}` : 'Grátis (Balcão)'}\n`;
-    msg += `💰 *TOTAL FINAL:* R$ ${finalTotal.toFixed(2).replace('.', ',')}\n\n`;
+    msg += `*Itens: R$ ${subtotal.toFixed(2).replace('.', ',')}*
+`;
+    if (fulfillmentType === 'delivery') {
+        msg += activeDeliveryFee > 0 ? `Entrega: R$ ${activeDeliveryFee.toFixed(2).replace('.', ',')}
+` : `Entrega a combinar
+`;
+    }
+    msg += `
+`;
 
-    msg += `💳 *FORMA DE PAGAMENTO:*\n`;
+    if (customerName) msg += `*${customerName}*
+`;
+    if (fulfillmentType === 'delivery' && customerAddress) {
+        msg += `${customerAddress}
+`;
+    }
+
     const isCash = selectedPayment.toLowerCase().includes('dinheiro');
     const isPix = selectedPayment.toLowerCase().includes('pix');
 
     if (isPix) {
-        msg += `⚡ *PIX (Chave: ${CLIENT_CONFIG.phoneFormatted} - Valor: R$ ${finalTotal.toFixed(2).replace('.', ',')})*\n`;
-        msg += `_Anexando o comprovante em seguida!_\n`;
+        msg += `Pagamento em Pix — combinamos a chave por aqui
+`;
     } else if (isCash) {
-        msg += `💵 *Dinheiro* ${cashChange ? `(Troco para R$ ${cashChange})` : '(Sem troco)'}\n`;
+        msg += `Pagamento em dinheiro — ${cashChange ? `troco para R$ ${cashChange}` : 'sem troco'}
+`;
     } else {
-        msg += `💳 *Cartão de Crédito/Débito (Levar maquininha)*\n`;
+        msg += `Pagamento no cartão — favor levar a maquininha
+`;
     }
 
-    msg += `\n_Pedido gerado pelo Canal Oficial da Panazzolo Pastelaria_`;
+    msg += `
+_Enviado pelo site da Pastelaria Panazzolo_`;
 
     const url = `https://wa.me/${CLIENT_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank');
