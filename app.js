@@ -785,6 +785,7 @@ function sendWhatsAppOrder() {
 
     const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
     const activeDeliveryFee = fulfillmentType === 'delivery' ? CLIENT_CONFIG.deliveryFee : 0;
+    const total = subtotal + activeDeliveryFee;
 
     let msg = `${fulfillmentType === 'delivery' ? 'Entrega em domicílio' : 'Retirada no balcão'}
 
@@ -794,11 +795,10 @@ function sendWhatsAppOrder() {
         const itemSum = i.price * i.quantity;
         msg += `*${i.quantity}x* ${i.title}
 `;
-        msg += `R$ ${itemSum.toFixed(2).replace('.', ',')}
-`;
         if (i.notes) msg += `_Obs: ${i.notes}_
 `;
-        msg += `
+        msg += `*R$ ${itemSum.toFixed(2).replace('.', ',')}*
+
 `;
     });
 
@@ -807,6 +807,11 @@ function sendWhatsAppOrder() {
     if (fulfillmentType === 'delivery') {
         msg += activeDeliveryFee > 0 ? `Entrega: R$ ${activeDeliveryFee.toFixed(2).replace('.', ',')}
 ` : `Entrega a combinar
+`;
+        msg += `*Total: R$ ${total.toFixed(2).replace('.', ',')}*
+`;
+    } else {
+        msg += `*Total: R$ ${subtotal.toFixed(2).replace('.', ',')}*
 `;
     }
     msg += `
